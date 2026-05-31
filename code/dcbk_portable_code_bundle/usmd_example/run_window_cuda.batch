@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#SBATCH --job-name=us_window
+#SBATCH --gres=gpu:a100:1
+#SBATCH --ntasks=1
+#SBATCH --time=48:00:00
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+
+set -e
+echo "Starting umbrella windows at $(date)"
+
+source /home/9soft/amber24/amber.sh
+
+prmtop=../comp_sol.prmtop
+name=comp
+
+for i in $(seq 19.0 1.0 36.0)
+do
+    echo "Running window ${i} at $(date)"
+    mkdir -p dist_${i}
+    cd dist_${i}
+
+    cp ../COM_dist.RST .
+    sed -i "s/DISTHERE/${i}/g" COM_dist.RST
+
+    # step1: minimization
+    pmemd.cuda -O -i ../01_min.in -o 01_min_${name}_${i}.out -p $prmtop -c ../frame_${i}.rst -r 01_min_${name}_${i}.rst
+
+    # step2: heating
+    pmemd.cuda -O -i ../02_heat.in -o 02_heat_${name}_${i}.out -p $prmtop -c 01_min_${name}_${i}.rst -r 02_heat_${name}_${i}.rst -x 02_heat_${name}_${i}.nc -ref 01_min_${name}_${i}.rst
+
+    # step3: density equil
+    pmemd.cuda -O -i ../03_density.in -o 03_density_${name}_${i}.out -p $prmtop -c 02_heat_${name}_${i}.rst -r 03_density_${name}_${i}.rst -x 03_density_${name}_${i}.nc -ref 02_heat_${name}_${i}.rst
+
+    # step4: restraint equil
+    pmemd.cuda -O -i ../04_eq.in -o 04_eq_${name}_${i}.out -p $prmtop -c 03_density_${name}_${i}.rst -r 04_eq_${name}_${i}.rst -x 04_eq_${name}_${i}.nc -ref 03_density_${name}_${i}.rst
+
+    # step5: production US
+    pmemd.cuda -O -i ../06_Prod.in -o 06_Prod_${name}_${i}.out -p $prmtop -c 04_eq_${name}_${i}.rst -r 06_Prod_${name}_${i}.rst -x 06_Prod_${name}_${i}.nc -inf 06_Prod_${name}_${i}.mdinfo
+
+    cd ..
+done
+
+echo "Finished umbrella windows at $(date)"

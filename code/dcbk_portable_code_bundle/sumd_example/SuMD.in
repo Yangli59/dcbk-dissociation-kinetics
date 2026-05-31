@@ -1,0 +1,7 @@
+Prod
+ &cntrl
+  imin=0,irest=1,ntx=5,nstlim=300000,dt=0.002,
+  iwrap=1,ntc=2,ntf=1,cut=12.0, ntb=1, 
+  ntpr=3750, ntwx=3750,ntwr=3750,ntt=3, gamma_ln=2.0,
+  temp0=310.0, ig=-1,
+ /

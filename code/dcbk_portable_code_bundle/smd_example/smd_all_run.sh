@@ -1,0 +1,57 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -l ngpus=1
+#$ -q v100@comput161
+#$ -cwd
+#$ -e error
+#$ -o outpt
+#$ -N Amber_smd
+
+source /home/soft/amber24/amber.sh
+source /home/cudasoft/bin/startcuda.sh
+source /home/qiliu02/miniconda3/etc/profile.d/conda.sh
+conda activate /home/qiliu02/miniconda3/envs/pyg-py36-cpu
+
+original_dir=$(pwd)
+cv_file="$original_dir/cv.dat"  # 明确cv.dat的位置
+
+for i in {1..4}; do  # 修正循环范围，从1到4
+    lig_dir="$original_dir/complex_md/lig${i}"
+    smd_dir="$lig_dir/exit_smd_rep"
+    
+    # 创建目录（如果不存在）
+    mkdir -p "$smd_dir"
+    cd "$smd_dir" || continue
+    
+    # 复制文件
+    cp "$lig_dir/"{comp_sol.prmtop,comp_sol.inpcrd,equil3.rst,equil3.out} .
+    cp equil3.rst SuMD_0.rst
+    cp /home/yangli02/01Example_MD/smd_example/* .
+
+    # 处理cpptraj
+    cpptraj << EOF
+    parm comp_sol.prmtop
+    trajin equil3.rst
+    strip :WAT,Na+,Cl-
+    trajout equil3.pdb
+    go
+EOF
+
+    # 从cv.dat读取参数（注意行号计算）
+    line_num=$(((i-1)*2 + 1))
+    igr1=$(sed -n "${line_num}p" "$cv_file")
+    igr2=$(sed -n "$((line_num+1))p" "$cv_file")
+    
+    # 修改RST文件
+    sed -i.bak "s/^\(\s*igr1=\).*/\1$igr1/" dist.example.RST
+    sed -i "s/^\(\s*igr2=\).*/\1$igr2/" dist.example.RST
+
+    # 执行MD运行脚本
+    ./mdrun.sh
+    
+    # 返回原始目录
+    cd "$original_dir"
+done
+
+echo "Ending script at $(date)"
+source /home/cudasoft/bin/end_cuda.sh

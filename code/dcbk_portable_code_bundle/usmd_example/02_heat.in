@@ -1,0 +1,12 @@
+heat 100k,310k
+ &cntrl
+  imin=0,irest=0,ntx=1,nstlim=500000,dt=0.001,
+  ig=-1,ntc=1,ntf=1,cut=10.0,ntb=1,ntpr=5000,
+  ntwx=10000,ntwr=10000,ntt=3,gamma_ln=2.0,tempi=0.0,temp0=300.0,
+  ntr=1,restraintmask='!:WAT,Na+,Cl-',restraint_wt=25.0,
+ /
+ &wt TYPE='TEMP0', istep1=0, istep2=250000,
+  value1=0.1, value2=100.0, /
+ &wt TYPE='TEMP0', istep1=250001, istep2=500000,
+  value1=100.0, value2=300.0, /
+ &wt TYPE='END' /

@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH --job-name=wham
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4          # 根据 WHAM 计算需求调整
+#SBATCH --mem=16G                  # 根据数据量调整
+#SBATCH --time=12:00:00            # 预计运行时间
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+
+set -euo pipefail
+echo "Starting WHAM at $(date)"
+
+# 如果需要使用 Amber 或 Python 环境
+source /home/soft/amber24/amber.sh
+source /home/qiliu02/miniconda3/etc/profile.d/conda.sh
+conda activate /home/qiliu02/miniconda3/envs/pyg-py36-cpu
+
+# 当前目录就是每个 lig 的 exit_smd_rep
+# 拷贝 WHAM 模板文件（可选）
+# cp /home/yangli02/01Example_MD/wham_example/* .
+
+# 运行 WHAM 脚本
+./01_fix_dist.sh
+./02_prepare_meta.sh
+./03_run_wham.sh
+
+echo "Finished WHAM at $(date)"
