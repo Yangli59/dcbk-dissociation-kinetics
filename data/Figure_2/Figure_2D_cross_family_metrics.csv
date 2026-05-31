@@ -1,0 +1,6 @@
+train_system,test_system,n_samples,model,top3_base_models,selected_complex_features,pearson_r,mse
+P07900,P03366,33,Top3MeanEnsemble,"XGBoost_small,RandomForest,ExtraTrees",complex_pca_0,0.9136557795728091,0.7287799346310868
+P07900,P29274,10,Top3MeanEnsemble,"XGBoost_small,RandomForest,ExtraTrees",complex_pca_0,0.9486544273467877,0.13850529243501333
+P07900,P49336,6,Top3MeanEnsemble,"XGBoost_small,RandomForest,ExtraTrees",complex_pca_0,0.9422268046910074,1.1068987504653023
+P07900,Q16539,7,Top3MeanEnsemble,"XGBoost_small,RandomForest,ExtraTrees",complex_pca_0,0.8801820280381967,1.610919992109143
+P07900,Q2G036,4,Top3MeanEnsemble,"XGBoost_small,RandomForest,ExtraTrees",complex_pca_0,0.8507703404446091,2.5577122432041492

@@ -1,0 +1,13 @@
+subset,group,label,mean_abs_shap,mean_signed_shap,n_samples
+All samples,whole_activation,Whole activation dG,0.6339967250823975,0.00327356718480587,110
+All samples,fingerprints,Whole-ligand fingerprints,0.2147216796875,0.0008974273223429918,110
+All samples,fragment_features,Fragment structure,0.27153605222702026,-0.002610995201393962,110
+All samples,fragment_activation,Fragment dG terms,0.35220932960510254,0.003297912422567606,110
+All samples,basic_ligand_physchem,Ligand physchem,0.04696199297904968,0.002018667059019208,110
+All samples,complex_structure,Complex structure,0.05249537527561188,-0.0022029755637049675,110
+HSP90,whole_activation,Whole activation dG,0.5707060098648071,0.053248655050992966,50
+HSP90,fingerprints,Whole-ligand fingerprints,0.22549179196357727,-0.018048442900180817,50
+HSP90,fragment_features,Fragment structure,0.24825136363506317,0.031775735318660736,50
+HSP90,fragment_activation,Fragment dG terms,0.31077927350997925,0.10954219847917557,50
+HSP90,basic_ligand_physchem,Ligand physchem,0.044846709817647934,0.010675748810172081,50
+HSP90,complex_structure,Complex structure,0.040378402918577194,-0.012013844214379787,50

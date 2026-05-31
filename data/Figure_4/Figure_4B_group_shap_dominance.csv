@@ -1,0 +1,13 @@
+subset,group,label,top_group_fraction,top_group_count,n_samples
+All samples,whole_activation,Whole activation dG,0.8,88,110
+All samples,fingerprints,Whole-ligand fingerprints,0.02727272727272727,3,110
+All samples,fragment_features,Fragment structure,0.05454545454545454,6,110
+All samples,fragment_activation,Fragment dG terms,0.11818181818181818,13,110
+All samples,basic_ligand_physchem,Ligand physchem,0.0,0,110
+All samples,complex_structure,Complex structure,0.0,0,110
+HSP90,whole_activation,Whole activation dG,0.78,39,50
+HSP90,fingerprints,Whole-ligand fingerprints,0.06,3,50
+HSP90,fragment_features,Fragment structure,0.06,3,50
+HSP90,fragment_activation,Fragment dG terms,0.1,5,50
+HSP90,basic_ligand_physchem,Ligand physchem,0.0,0,50
+HSP90,complex_structure,Complex structure,0.0,0,50
