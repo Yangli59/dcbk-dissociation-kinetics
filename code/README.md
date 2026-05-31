@@ -1,27 +1,41 @@
+# /code – Computational workflows for DCBK
 
-# `/data` – Supporting data for the DCBK paper
+This directory contains all custom Python and shell scripts used for:
 
-This directory contains all source data used to generate the figures and tables in the manuscript.
+- simulation processing
+- PMF reconstruction
+- feature generation
+- machine learning (training, evaluation, SHAP analysis)
+- figure generation
 
 ## Folder structure
-data/
-├── Figure_1/ # Dataset overview
-├── Figure_2/ # Benchmark results
-├── Figure_3/ # Distribution shift & feature summary
-├── Figure_4/ # (additional)
-└── Supplementary/ # Supplementary figures S1–S2
+code/
+├── dcbk_portable_code_bundle/
+├── ml_models/
+├── shap_analysis/
+└── figure_generation/
 
 text
 
-Each subfolder contains one or more `.csv` files.  
-File names and column headers correspond directly to the panels and variables described in the paper.
+## Quick start
 
-## How to cite these data
+1. **Set up the environment** (conda recommended):
+   ```bash
+   conda env create -f ../environment.yml
+   conda activate dcbk
+2. **Run the main pipeline**
+   ```bash
+   cd dcbk_portable_code_bundle
+   bash DCBK_premd.sh   # equilibration
+   bash DCBK_md.sh      # MD simulation
+   bash DCBK_smd.sh     # PMF reconstruction
+   
+## For ML and SHAP steps, see the ml_models/ and shap_analysis/ subdirectories.
 
-If you use these data, please include the following **Data availability** statement:
+## How to cite this code
+If you use this code, please include the following Code availability statement:
 
-> The curated benchmark underlying this study comprises 110 protein–ligand complexes across six target systems, together with experimental p\(k_{\text{off}}\) values, structure identifiers, split labels and derived simulation-based descriptors. Source data supporting Figures 1–4 and Supplementary Figures S1–S2 are organised as figure-specific tables in the submission package. All data files are also available in the `data/` directory of the accompanying GitHub repository ([https://github.com/Yangli59/dcbk-dissociation-kinetics](https://github.com/Yangli59/dcbk-dissociation-kinetics)).
+The complete set of custom scripts used for simulation‑processing, PMF reconstruction, feature generation, machine learning, SHAP analysis and figure generation was implemented in Python and shell scripts. All code is publicly available on GitHub at https://github.com/Yangli59/dcbk-dissociation-kinetics. The code is released under the MIT License.
 
 ## License
-
-All data in this directory are released under the **MIT License** (same as the code). See the root [LICENSE](../LICENSE) file.
+All code in this directory is released under the MIT License. See the root LICENSE file.
