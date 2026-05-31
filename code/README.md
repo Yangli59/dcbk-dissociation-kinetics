@@ -1,4 +1,4 @@
-markdown
+
 # `/data` – Supporting data for the DCBK paper
 
 This directory contains all source data used to generate the figures and tables in the manuscript.
